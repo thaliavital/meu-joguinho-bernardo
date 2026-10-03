@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cores - Bernardo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3e8ff;
+            text-align: center;
+            margin: 0;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #6a3dad;
+            font-size: 38px;
+        }
+
+        #pergunta {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 25px;
+        }
+
+        #cor {
+            width: 220px;
+            height: 220px;
+            border-radius: 30px;
+            margin: 20px auto 30px;
+            border: 5px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .opcao {
+            display: block;
+            width: 280px;
+            margin: 15px auto;
+            padding: 18px;
+            border: none;
+            border-radius: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .opcao:hover {
+            transform: scale(1.03);
+        }
+
+        #mensagem {
+            font-size: 26px;
+            font-weight: bold;
+            min-height: 40px;
+            margin: 20px;
+        }
+
+        #voltar {
+            margin-top: 20px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎨 Cores</h1>
+
+    <div id="pergunta">
+        Que cor é essa?
+    </div>
+
+    <div id="cor"></div>
+
+    <div id="opcoes"></div>
+
+    <div id="mensagem"></div>
+
+    <button id="voltar" onclick="voltarInicio()">
+        🏠 Voltar
+    </button>
+
+
+    <script>
+
+        const cores = [
+            {
+                nome: "Vermelho",
+                codigo: "#ff4d4d"
+            },
+            {
+                nome: "Azul",
+                codigo: "#4d8cff"
+            },
+            {
+                nome: "Amarelo",
+                codigo: "#ffd84d"
+            },
+            {
+                nome: "Verde",
+                codigo: "#55c878"
+            }
+        ];
+
+
+        let corAtual;
+
+
+        function novaPergunta() {
+
+            document.getElementById("mensagem").innerHTML = "";
+
+            const numero =
+                Math.floor(Math.random() * cores.length);
+
+            corAtual = cores[numero];
+
+            document.getElementById("cor").style.backgroundColor =
+                corAtual.codigo;
+
+
+            let opcoes = [corAtual];
+
+            while (opcoes.length < 3) {
+
+                const outra =
+                    cores[Math.floor(Math.random() * cores.length)];
+
+                if (!opcoes.includes(outra)) {
+                    opcoes.push(outra);
+                }
+            }
+
+
+            opcoes.sort(() => Math.random() - 0.5);
+
+
+            const area =
+                document.getElementById("opcoes");
+
+            area.innerHTML = "";
+
+
+            opcoes.forEach(function(cor) {
+
+                const botao =
+                    document.createElement("button");
+
+                botao.className = "opcao";
+
+                botao.innerHTML = cor.nome;
+
+                botao.onclick = function() {
+                    responder(cor.nome);
+                };
+
+                area.appendChild(botao);
+            });
+        }
+
+
+        function responder(resposta) {
+
+            const mensagem =
+                document.getElementById("mensagem");
+
+
+            if (resposta === corAtual.nome) {
+
+                mensagem.innerHTML =
+                    "⭐ Muito bem, Bernardo! ⭐";
+
+                setTimeout(function() {
+                    novaPergunta();
+                }, 1200);
+
+            } else {
+
+                mensagem.innerHTML =
+                    "💛 Vamos tentar outra vez!";
+            }
+        }
+
+
+        function voltarInicio() {
+
+            window.location.href = "../index.html";
+
+        }
+
+
+        novaPergunta();
+
+    </script>
+
+</body>
+
+</html>

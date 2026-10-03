@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Figuras - Bernardo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3e8ff;
+            text-align: center;
+            margin: 0;
+            padding: 25px 15px;
+        }
+
+        h1 {
+            color: #4b3ca7;
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        #pergunta {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        #acertos {
+            font-size: 22px;
+            color: #555;
+        }
+
+        .opcoes {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .opcao {
+            width: 280px;
+            height: 250px;
+            background: white;
+            border: 4px solid #e4d9ff;
+            border-radius: 25px;
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .opcao:hover {
+            transform: scale(1.04);
+        }
+
+        #mensagem {
+            font-size: 26px;
+            font-weight: bold;
+            min-height: 40px;
+            margin: 20px;
+        }
+
+        .voltar {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 15px;
+            background: #ddd;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🌟 Vamos brincar, Bernardo! 🌟</h1>
+
+    <div id="acertos">⭐ Acertos: 0</div>
+
+    <div id="pergunta">Qual é o carro?</div>
+
+    <div class="opcoes">
+        <button class="opcao" id="opcao1" onclick="responder(0)"></button>
+        <button class="opcao" id="opcao2" onclick="responder(1)"></button>
+    </div>
+
+    <div id="mensagem"></div>
+
+    <button class="voltar" onclick="voltarInicio()">
+        🏠 Voltar
+    </button>
+
+
+    <script>
+
+        const figuras = [
+            { nome: "carro", imagem: "🚗" },
+            { nome: "cão", imagem: "🐶" },
+            { nome: "gato", imagem: "🐱" },
+            { nome: "ônibus", imagem: "🚌" },
+            { nome: "caminhão", imagem: "🚚" },
+            { nome: "vaca", imagem: "🐮" },
+            { nome: "pato", imagem: "🦆" },
+            { nome: "cavalo", imagem: "🐴" },
+            { nome: "girafa", imagem: "🦒" },
+            { nome: "baleia", imagem: "🐋" },
+            { nome: "leão", imagem: "🦁" },
+            { nome: "macaco", imagem: "🐵" },
+            { nome: "ovelha", imagem: "🐑" },
+            { nome: "dinossauro", imagem: "🦖" }
+        ];
+
+        let figuraCorreta;
+        let indiceCorreto;
+        let acertos = 0;
+
+
+        function novaPergunta() {
+
+            document.getElementById("mensagem").innerHTML = "";
+
+            // Escolhe uma figura para ser a resposta
+            figuraCorreta =
+                figuras[Math.floor(Math.random() * figuras.length)];
+
+            // Escolhe uma figura diferente para a outra opção
+            let outraFigura;
+
+            do {
+                outraFigura =
+                    figuras[Math.floor(Math.random() * figuras.length)];
+            } while (outraFigura === figuraCorreta);
+
+
+            // Decide aleatoriamente em qual lado ficará a resposta
+            indiceCorreto = Math.floor(Math.random() * 2);
+
+
+            if (indiceCorreto === 0) {
+
+                document.getElementById("opcao1").innerHTML =
+                    figuraCorreta.imagem;
+
+                document.getElementById("opcao2").innerHTML =
+                    outraFigura.imagem;
+
+            } else {
+
+                document.getElementById("opcao1").innerHTML =
+                    outraFigura.imagem;
+
+                document.getElementById("opcao2").innerHTML =
+                    figuraCorreta.imagem;
+            }
+
+
+           const artigo = ["vaca", "girafa", "baleia", "ovelha"].includes(figuraCorreta.nome) ? "a" : "o";
+
+document.getElementById("pergunta").innerHTML =
+    "Onde está " + artigo + " " + figuraCorreta.nome + "?";
+        }
+
+
+        function responder(escolha) {
+
+            const mensagem =
+                document.getElementById("mensagem");
+
+
+            if (escolha === indiceCorreto) {
+
+                acertos++;
+
+                document.getElementById("acertos").innerHTML =
+                    "⭐ Acertos: " + acertos;
+
+                mensagem.innerHTML =
+                    "🌟 Muito bem, Bernardo! 🌟";
+
+                setTimeout(function () {
+                    novaPergunta();
+                }, 1200);
+
+            } else {
+
+                mensagem.innerHTML =
+                    "💛 Vamos tentar outra vez!";
+
+            }
+        }
+
+
+        function voltarInicio() {
+
+            window.location.href = "../index.html";
+
+        }
+
+
+        // Começa o jogo
+        novaPergunta();
+
+    </script>
+
+</body>
+
+</html>

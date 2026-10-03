@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meu Joguinho - Bernardo</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3e8ff;
+            margin: 0;
+            min-height: 100vh;
+            text-align: center;
+            color: #444;
+        }
+
+        .tela {
+            max-width: 600px;
+            margin: auto;
+            padding: 25px 20px 40px;
+        }
+
+        h1 {
+            color: #6a3dad;
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin: 15px 0;
+        }
+
+        p {
+            font-size: 22px;
+        }
+
+        .subtitulo {
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .menu-botao {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 18px auto;
+            padding: 22px;
+            border: none;
+            border-radius: 25px;
+            font-size: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px #00000018;
+        }
+
+        .menu-botao:hover {
+            transform: scale(1.02);
+        }
+
+        .animais {
+            background: #d9f7d9;
+        }
+
+        .cores {
+            background: #d6f5ff;
+        }
+
+        .associacao {
+            background: #fff0c2;
+        }
+
+        .carros {
+            background: #ffd6e7;
+        }
+
+        .dinos {
+            background: #dcd6ff;
+        }
+
+        .emocoes {
+            background: #ffe0ed;
+        }
+
+        .cartao-animal {
+            background: white;
+            border-radius: 30px;
+            padding: 30px 20px;
+            margin: 20px auto;
+            max-width: 450px;
+            box-shadow: 0 5px 15px #00000015;
+        }
+
+        .animal {
+            font-size: 140px;
+            margin: 10px;
+        }
+
+        .pergunta {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .resposta {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 15px auto;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #dddddd;
+            background: white;
+            font-size: 27px;
+            cursor: pointer;
+        }
+
+        .resposta:hover {
+            background: #f5f5f5;
+            transform: scale(1.02);
+        }
+
+        .mensagem {
+            min-height: 50px;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .progresso {
+            font-size: 24px;
+            margin: 10px;
+        }
+
+        .proximo {
+            background: #d9f7d9;
+            border: none;
+            border-radius: 20px;
+            padding: 18px 35px;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .voltar {
+            background: #e5e5e5;
+            border: none;
+            border-radius: 20px;
+            padding: 16px 30px;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .escondido {
+            display: none;
+        }
+
+        .em-breve {
+            opacity: 0.65;
+        }
+
+        .estrelas {
+            font-size: 28px;
+            margin: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================= -->
+<!-- MENU PRINCIPAL -->
+<!-- ========================= -->
+
+<div id="inicio" class="tela">
+
+    <h1>🌟 Meu Joguinho 🌟</h1>
+
+    <p class="subtitulo">
+        Olá, Bernardo! 😊
+        <br>
+        Vamos brincar?
+    </p>
+
+
+    <button
+        class="menu-botao animais"
+        onclick="abrirAnimais()">
+
+        🐾 Animais
+
+    </button>
+
+
+    <button class="menu-botao cores" onclick="window.location.href='jogos/cores.html'">
+    🎨 Cores
+</button>
+
+    <button
+    class="menu-botao numeros"
+    onclick="window.location.href='jogos/numeros.html'">
+
+    🔢 Números
+
+</button>
+
+
+<button
+    class="menu-botao associacao"
+    onclick="window.location.href='jogos/associacao.html'">
+
+    🧩 Associação
+
+</button> 
+
+
+
+   <button
+    class="menu-botao carros"
+    onclick="window.location.href='jogos/carros.html'">
+
+    🚗 Carros
+
+</button>
+       
+    
+
+
+
+   
+
+
+   
+
+
+</div>
+
+
+
+<!-- ========================= -->
+<!-- JOGO DOS ANIMAIS -->
+<!-- ========================= -->
+
+<div id="jogoAnimais" class="tela escondido">
+
+    <h1>🐾 Animais</h1>
+
+    <div class="progresso">
+
+        Acertos: <span id="acertos">0</span>
+
+    </div>
+
+    <div class="estrelas" id="estrelas">
+        ⭐
+    </div>
+
+
+    <div class="cartao-animal">
+
+        <div class="pergunta">
+            Que animal é esse?
+        </div>
+
+        <div
+            id="animal"
+            class="animal">
+
+            🐶
+
+        </div>
+
+    </div>
+
+
+    <div id="opcoes"></div>
+
+
+    <div
+        id="mensagem"
+        class="mensagem">
+    </div>
+
+
+    <button
+        id="botaoProximo"
+        class="proximo escondido"
+        onclick="novaPergunta()">
+
+        ➡️ Próximo animal
+
+    </button>
+
+
+    <br>
+
+
+    <button
+        class="voltar"
+        onclick="voltarInicio()">
+
+        🏠 Voltar
+
+    </button>
+
+</div>
+
+
+
+<script>
+
+
+/* ========================= */
+/* ANIMAIS DO BERNARDO */
+/* ========================= */
+
+
+const animais = [
+
+    {
+        nome: "Cão",
+        desenho: "🐶"
+    },
+
+    {
+        nome: "Vaca",
+        desenho: "🐮"
+    },
+
+    {
+        nome: "Gato",
+        desenho: "🐱"
+    },
+
+    {
+        nome: "Pato",
+        desenho: "🦆"
+    },
+
+    {
+        nome: "Cavalo",
+        desenho: "🐴"
+    },
+
+    {
+        nome: "Girafa",
+        desenho: "🦒"
+    },
+
+    {
+        nome: "Baleia",
+        desenho: "🐋"
+    },
+
+    {
+        nome: "Leão",
+        desenho: "🦁"
+    },
+
+    {
+        nome: "Macaco",
+        desenho: "🐵"
+    },
+
+    {
+        nome: "Ovelha",
+        desenho: "🐑"
+    }
+
+];
+
+
+let animalAtual;
+
+let acertos = 0;
+
+
+
+/* ========================= */
+/* ABRIR JOGO */
+/* ========================= */
+
+
+function abrirAnimais() {
+
+    document
+        .getElementById("inicio")
+        .classList
+        .add("escondido");
+
+
+    document
+        .getElementById("jogoAnimais")
+        .classList
+        .remove("escondido");
+
+
+    novaPergunta();
+
+}
+
+
+
+/* ========================= */
+/* NOVA PERGUNTA */
+/* ========================= */
+
+
+function novaPergunta() {
+
+    document
+        .getElementById("mensagem")
+        .innerHTML = "";
+
+
+    document
+        .getElementById("botaoProximo")
+        .classList
+        .add("escondido");
+
+
+    animalAtual =
+        animais[
+            Math.floor(
+                Math.random() * animais.length
+            )
+        ];
+
+
+    document
+        .getElementById("animal")
+        .innerHTML =
+        animalAtual.desenho;
+
+
+    criarOpcoes();
+
+}
+
+
+
+/* ========================= */
+/* CRIAR RESPOSTAS */
+/* ========================= */
+
+
+function criarOpcoes() {
+
+    const opcoes =
+        document.getElementById("opcoes");
+
+
+    opcoes.innerHTML = "";
+
+
+    let respostas = [
+        animalAtual.nome
+    ];
+
+
+    while (respostas.length < 3) {
+
+        const outro =
+            animais[
+                Math.floor(
+                    Math.random() * animais.length
+                )
+            ].nome;
+
+
+        if (!respostas.includes(outro)) {
+
+            respostas.push(outro);
+
+        }
+
+    }
+
+
+    respostas.sort(
+        () => Math.random() - 0.5
+    );
+
+
+    respostas.forEach(
+        function(nome) {
+
+            const botao =
+                document.createElement("button");
+
+
+            botao.className =
+                "resposta";
+
+
+            botao.innerHTML =
+                nome;
+
+
+            botao.onclick =
+                function() {
+
+                    responder(nome);
+
+                };
+
+
+            opcoes.appendChild(botao);
+
+        }
+    );
+
+}
+
+
+
+/* ========================= */
+/* RESPONDER */
+/* ========================= */
+
+
+function responder(resposta) {
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+
+    if (resposta === animalAtual.nome) {
+
+        acertos++;
+
+
+        document
+            .getElementById("acertos")
+            .innerHTML = acertos;
+
+
+        mensagem.innerHTML =
+            "⭐ Muito bem, Bernardo! ⭐";
+
+
+        document
+            .getElementById("botaoProximo")
+            .classList
+            .remove("escondido");
+
+
+        document
+            .getElementById("opcoes")
+            .innerHTML = "";
+
+
+    } else {
+
+        mensagem.innerHTML =
+            "💛 Vamos tentar outra vez!";
+
+    }
+
+}
+
+
+
+/* ========================= */
+/* VOLTAR AO MENU */
+/* ========================= */
+
+
+function voltarInicio() {
+
+    document
+        .getElementById("jogoAnimais")
+        .classList
+        .add("escondido");
+
+
+    document
+        .getElementById("inicio")
+        .classList
+        .remove("escondido");
+
+
+    document
+        .getElementById("mensagem")
+        .innerHTML = "";
+
+}
+
+</script>
+
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./service-worker.js");
+    }
+</script>
+</body>
+
+</html>

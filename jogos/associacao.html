@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associação - Bernardo</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 38px;
+            color: #333;
+        }
+
+        #pergunta {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 35px 0;
+        }
+
+        .opcoes {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .figura {
+            width: 200px;
+            height: 200px;
+            font-size: 100px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        .figura:active {
+            transform: scale(0.95);
+        }
+
+        #mensagem {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 35px;
+            min-height: 40px;
+        }
+
+        #acertos {
+            font-size: 22px;
+            margin-top: 20px;
+        }
+
+        .voltar {
+            margin-top: 35px;
+            padding: 15px 25px;
+            font-size: 20px;
+            border: none;
+            border-radius: 15px;
+            background: #ddd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🧩 Associação</h1>
+
+    <div id="pergunta">Qual é igual ao cão?</div>
+
+    <div class="opcoes">
+        <button class="figura" id="opcao1" onclick="escolher(1)"></button>
+        <button class="figura" id="opcao2" onclick="escolher(2)"></button>
+    </div>
+
+    <div id="mensagem"></div>
+
+    <div id="acertos">Acertos: 0</div>
+
+    <button class="voltar" onclick="voltar()">🏠 Voltar</button>
+
+    <script>
+        const figuras = [
+            { nome: "cão", emoji: "🐶" },
+            { nome: "gato", emoji: "🐱" },
+            { nome: "carro", emoji: "🚗" },
+            { nome: "ônibus", emoji: "🚌" },
+            { nome: "vaca", emoji: "🐮" },
+            { nome: "pato", emoji: "🦆" },
+            { nome: "cavalo", emoji: "🐴" },
+            { nome: "girafa", emoji: "🦒" },
+            { nome: "leão", emoji: "🦁" },
+            { nome: "macaco", emoji: "🐵" }
+        ];
+
+        let figuraCorreta;
+        let acertos = 0;
+
+        function novaPergunta() {
+
+            figuraCorreta =
+                figuras[Math.floor(Math.random() * figuras.length)];
+
+            let figuraErrada;
+
+            do {
+                figuraErrada =
+                    figuras[Math.floor(Math.random() * figuras.length)];
+            } while (figuraErrada.nome === figuraCorreta.nome);
+
+            document.getElementById("pergunta").innerHTML =
+                "Qual é igual ao " + figuraCorreta.nome + "?";
+
+            let corretaNaEsquerda = Math.random() < 0.5;
+
+            if (corretaNaEsquerda) {
+                document.getElementById("opcao1").innerHTML =
+                    figuraCorreta.emoji;
+
+                document.getElementById("opcao2").innerHTML =
+                    figuraErrada.emoji;
+            } else {
+                document.getElementById("opcao1").innerHTML =
+                    figuraErrada.emoji;
+
+                document.getElementById("opcao2").innerHTML =
+                    figuraCorreta.emoji;
+            }
+
+            document.getElementById("mensagem").innerHTML = "";
+        }
+
+        function escolher(opcao) {
+
+            let emojiEscolhido =
+                document.getElementById("opcao" + opcao).innerHTML;
+
+            if (emojiEscolhido === figuraCorreta.emoji) {
+
+                acertos++;
+
+                document.getElementById("mensagem").innerHTML =
+                    "⭐ Muito bem, Bernardo! ⭐";
+
+                document.getElementById("acertos").innerHTML =
+                    "Acertos: " + acertos;
+
+                setTimeout(novaPergunta, 1000);
+
+            } else {
+
+                document.getElementById("mensagem").innerHTML =
+                    "💛 Vamos tentar outra vez!";
+            }
+        }
+
+        function voltar() {
+            window.location.href = "../index.html";
+        }
+
+        novaPergunta();
+    </script>
+
+</body>
+</html>
